@@ -1,3 +1,6 @@
-export { toAst } from './toAst'
+import { traverse } from './traverse'
 
-export default {}
+export { toAst } from './toAst'
+export { traverse }
+
+export default traverse

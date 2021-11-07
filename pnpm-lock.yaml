@@ -25,6 +25,7 @@ specifiers:
   eslint-plugin-import: ^2.22.0
   eslint-plugin-prettier: ^3.1.4
   ginlibs-cache: ^0.0.6
+  ginlibs-type-check: ^0.0.19
   husky: ^4.2.5
   jest: ^26.4.2
   lerna: ^3.22.1
@@ -45,6 +46,7 @@ specifiers:
 
 dependencies:
   ginlibs-cache: 0.0.6
+  ginlibs-type-check: 0.0.19
   mdast-util-from-markdown: 0.8.5
   mdast-util-to-markdown: 0.6.5
 
@@ -5357,6 +5359,10 @@ packages:
 
   /ginlibs-type-check/0.0.18:
     resolution: {integrity: sha512-ZEWFisdMgyO9RvYyj8IqL6vGSLOAQEL8asmh7HbFh8/b0yYUQdRJCXV4RL7Gez7asOaQ9plI07xTe9sNAOuF8A==}
+    dev: false
+
+  /ginlibs-type-check/0.0.19:
+    resolution: {integrity: sha512-9cmDyE0QDgPuOpvGa8iv1K+SDdfJBHJxn7EpC/n0gu27j83nWAJ1aHUQXRYirsBkPWRgzPLBvygv3/pkLy4d+w==}
     dev: false
 
   /ginlibs-type-check/0.0.8:

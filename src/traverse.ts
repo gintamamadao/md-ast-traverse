@@ -1,37 +1,39 @@
-export enum NodeType {
-  root = 'root',
-  paragraph = 'paragraph',
-  heading = 'heading',
-  thematicBreak = 'thematicBreak',
-  blockquote = 'blockquote',
-  list = 'list',
-  listItem = 'listItem',
-  table = 'table',
-  tableRow = 'tableRow',
-  tableCell = 'tableCell',
-  html = 'html',
-  code = 'code',
-  yaml = 'yaml',
-  definition = 'definition',
-  footnoteDefinition = 'footnoteDefinition',
-  text = 'text',
-  emphasis = 'emphasis',
-  strong = 'strong',
-  delete = 'delete',
-  inlineCode = 'inlineCode',
-  break = 'break',
-  link = 'link',
-  image = 'image',
-  linkReference = 'linkReference',
-  imageReference = 'imageReference',
-  footnote = 'footnote',
-  footnoteReference = 'footnoteReference',
-}
+import { NodeType } from './types'
+import tc from 'ginlibs-type-check'
 
 export type Options = {
   [p in NodeType]: (node: any) => void
 }
 
+const noop: any = () => undefined
+
 export const traverse = (node: any, opts: Options) => {
-  return ''
+  const nodeMap: Partial<Record<NodeType, any>> = {}
+  const type = node.type || 'root'
+  const children = node.children || []
+  nodeMap[type] = [node]
+
+  const checkNode = (nodeIts: any[]) => {
+    for (const it of nodeIts) {
+      const type = it.type
+      if (!type) {
+        continue
+      }
+      nodeMap[type] = it
+      const itChildList = it.children
+      if (tc.isArray(itChildList)) {
+        checkNode(itChildList)
+      }
+    }
+  }
+
+  checkNode(children)
+
+  for (const type of Object.keys(opts)) {
+    const nodeList = nodeMap[type] || []
+    const func = opts[type] || noop
+    nodeList.forEach((it) => {
+      func(it)
+    })
+  }
 }

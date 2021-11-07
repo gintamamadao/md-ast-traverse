@@ -30,6 +30,7 @@
   "homepage": "https://github.com/gintamamadao/ginlibs-md-notes/#readme",
   "dependencies": {
     "ginlibs-cache": "^0.0.6",
+    "ginlibs-type-check": "^0.0.19",
     "mdast-util-from-markdown": "^0.8.4",
     "mdast-util-to-markdown": "^0.6.2"
   },

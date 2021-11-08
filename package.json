@@ -19,9 +19,6 @@
     "type": "git",
     "url": "git+https://github.com/gintamamadao/ginlibs-md-notes.git"
   },
-  "bin": {
-    "md-note": "./bin/cli.js"
-  },
   "author": "",
   "license": "MIT",
   "bugs": {

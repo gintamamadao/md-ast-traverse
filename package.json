@@ -1,6 +1,6 @@
 {
   "name": "md-ast-traverse",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "traversing Markdown AST tree",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gintamamadao/ginlibs-md-notes.git"
+    "url": "git+https://github.com/gintamamadao/md-ast-traverse.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gintamamadao/ginlibs-md-notes/issues"
+    "url": "https://github.com/gintamamadao/md-ast-traverse/issues"
   },
-  "homepage": "https://github.com/gintamamadao/ginlibs-md-notes/#readme",
+  "homepage": "https://github.com/gintamamadao/md-ast-traverse/#readme",
   "dependencies": {
     "ginlibs-cache": "^0.0.6",
     "ginlibs-type-check": "^0.0.19",

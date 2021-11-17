@@ -63,6 +63,14 @@ export class Scope {
     this.deleted = true
   }
 
+  replace(node: any) {
+    if (this.deleted) {
+      throw new Error('target had deleted')
+    }
+    const index = this.getIndex()
+    this.curList.splice(index, 1, node)
+  }
+
   addBrotherNode(node: any, index?: number) {
     if (index === undefined) {
       this.curList.push(node)

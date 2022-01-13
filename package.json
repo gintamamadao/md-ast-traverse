@@ -1,6 +1,6 @@
 {
   "name": "md-ast-traverse",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "traversing Markdown AST tree",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -19,7 +19,12 @@
     "type": "git",
     "url": "git+https://github.com/gintamamadao/md-ast-traverse.git"
   },
-  "author": "",
+  "keywords": [
+    "Markdown",
+    "AST",
+    "traverse"
+  ],
+  "author": "gintamamadao",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gintamamadao/md-ast-traverse/issues"
@@ -70,6 +75,5 @@
     "ts-node": "^9.1.1",
     "tslib": "^2.0.0",
     "typescript": "^4.0.2"
-  },
-  "gitHead": "41695ee7cd51d3c2658fc8bbee01129417cf24f9"
+  }
 }

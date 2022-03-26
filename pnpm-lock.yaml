@@ -24,15 +24,16 @@ specifiers:
   eslint-plugin-import: ^2.22.0
   eslint-plugin-prettier: ^3.1.4
   ginlibs-cache: ^0.0.6
-  ginlibs-type-check: ^0.0.19
+  ginlibs-chain: ^2.2.0
+  ginlibs-type-check: ^2.0.0
   husky: ^4.2.5
   jest: ^26.4.2
   lint-staged: ^10.4.2
   mdast-util-from-markdown: ^0.8.4
   mdast-util-to-markdown: ^0.6.2
+  prettier: ^2.6.1
   rimraf: ^3.0.2
   rollup: ^2.23.0
-  rollup-plugin-node-externals: ^2.2.0
   rollup-plugin-preserve-shebangs: ^0.2.0
   rollup-plugin-terser: ^6.1.0
   rollup-plugin-typescript2: ^0.27.1
@@ -43,7 +44,8 @@ specifiers:
 
 dependencies:
   ginlibs-cache: 0.0.6
-  ginlibs-type-check: 0.0.19
+  ginlibs-chain: 2.2.0
+  ginlibs-type-check: 2.0.0
   mdast-util-from-markdown: 0.8.5
   mdast-util-to-markdown: 0.6.5
 
@@ -69,13 +71,13 @@ devDependencies:
   eslint-config-prettier: 6.15.0_eslint@7.32.0
   eslint-import-resolver-typescript: 2.5.0_560ef94424f7023f0ab025f67f79aa67
   eslint-plugin-import: 2.25.2_eslint@7.32.0
-  eslint-plugin-prettier: 3.4.1_abde24c0b7a99c720e8b7b900c7a58d8
+  eslint-plugin-prettier: 3.4.1_ccc18f13c421cb97bf8b0dfd83b0e7ee
   husky: 4.3.8
   jest: 26.6.3_ts-node@9.1.1
   lint-staged: 10.5.4
+  prettier: 2.6.1
   rimraf: 3.0.2
   rollup: 2.59.0
-  rollup-plugin-node-externals: 2.2.0
   rollup-plugin-preserve-shebangs: 0.2.0_rollup@2.59.0
   rollup-plugin-terser: 6.1.0_rollup@2.59.0
   rollup-plugin-typescript2: 0.27.3_rollup@2.59.0+typescript@4.4.4
@@ -3257,7 +3259,7 @@ packages:
       tsconfig-paths: 3.11.0
     dev: true
 
-  /eslint-plugin-prettier/3.4.1_abde24c0b7a99c720e8b7b900c7a58d8:
+  /eslint-plugin-prettier/3.4.1_ccc18f13c421cb97bf8b0dfd83b0e7ee:
     resolution: {integrity: sha512-htg25EUYUeIhKHXjOinK4BgCcDwtLHjqaxCDsMy5nbnUMkKFvIhMVCp+5GFUXQ4Nr8lBsPqtGAqBenbpFqAA2g==}
     engines: {node: '>=6.0.0'}
     peerDependencies:
@@ -3270,6 +3272,7 @@ packages:
     dependencies:
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
+      prettier: 2.6.1
       prettier-linter-helpers: 1.0.0
     dev: true
 
@@ -3774,6 +3777,13 @@ packages:
       json-stringify-safe: 5.0.1
     dev: false
 
+  /ginlibs-chain/2.2.0:
+    resolution: {integrity: sha512-UHV3c6kh3ibHVCWa1/iqSZ9F/TBZVPLSvZr2VBX1ehA3JWNSj9XfN6WF5o5Eyj5vGRx/LfnpezgDGBVUpPFxfw==}
+    dependencies:
+      ginlibs-type-check: 2.0.0
+      ginlibs-utils: 0.0.11
+    dev: false
+
   /ginlibs-file-util/0.0.5:
     resolution: {integrity: sha512-MlfD8Lil1FduwxuL6t4B6wjd1zBTt8iYT61wpy+pvhNBWlVxnLOIlS8Ny8nB5Ng1XsGJgfMJWLCdBn/xbLPzVQ==}
     dependencies:
@@ -3788,12 +3798,18 @@ packages:
     resolution: {integrity: sha512-ZEWFisdMgyO9RvYyj8IqL6vGSLOAQEL8asmh7HbFh8/b0yYUQdRJCXV4RL7Gez7asOaQ9plI07xTe9sNAOuF8A==}
     dev: false
 
-  /ginlibs-type-check/0.0.19:
-    resolution: {integrity: sha512-9cmDyE0QDgPuOpvGa8iv1K+SDdfJBHJxn7EpC/n0gu27j83nWAJ1aHUQXRYirsBkPWRgzPLBvygv3/pkLy4d+w==}
-    dev: false
-
   /ginlibs-type-check/0.0.8:
     resolution: {integrity: sha512-RAMjwkrU68ZfL/2kfxNhVe7Ym0ATILo9z7ZBEfMh0kXSNyhSBkwHChnBNdkReSdVGt5zHjLPeyIPonFEdP35xA==}
+    dev: false
+
+  /ginlibs-type-check/2.0.0:
+    resolution: {integrity: sha512-+LmirvVtGkR5SeO1kNfHdcDpsniDOGZq6iy6VN01ZwYdJ1q0ogNpYigmtRHBH+k/QRhaSdo2m/5XQsbXeTWd/g==}
+    dev: false
+
+  /ginlibs-utils/0.0.11:
+    resolution: {integrity: sha512-3uUEEpf3Jb+5wn508VBXbLdbNLm+cK6zKicEhtBOYk1qGkCqxQwZfH7dmt/X+hPbe53/fCIAKCcynrt854W9nw==}
+    dependencies:
+      ginlibs-type-check: 0.0.8
     dev: false
 
   /git-raw-commits/2.0.10:
@@ -5867,6 +5883,12 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
+  /prettier/2.6.1:
+    resolution: {integrity: sha512-8UVbTBYGwN37Bs9LERmxCPjdvPxlEowx2urIL6urHzdb3SDq4B/Z6xLFCblrSnE4iKWcS6ziJ3aOYrc1kz/E2A==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
+
   /pretty-format/26.6.2:
     resolution: {integrity: sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==}
     engines: {node: '>= 10'}
@@ -6138,15 +6160,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.0
-    dev: true
-
-  /rollup-plugin-node-externals/2.2.0:
-    resolution: {integrity: sha512-WM7TtQ76GdsLceEGmZzQzn1afj8JgOQT5VLs1Y9RMqowM/8eK2mBj/Lv7hoE833U75QsUZIRirYUtFatu51RJA==}
-    engines: {node: '>=8.0.0'}
-    peerDependencies:
-      builtin-modules: ^3.1.0
-    dependencies:
-      find-up: 4.1.0
     dev: true
 
   /rollup-plugin-preserve-shebangs/0.2.0_rollup@2.59.0:

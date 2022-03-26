@@ -1,6 +1,6 @@
 import { NodeType } from './types'
 import { Scope } from './scope'
-import tc from 'ginlibs-type-check'
+import { isArray } from 'ginlibs-type-check'
 
 export type Options = {
   [p in NodeType]?: (node: any, scope: Scope) => void
@@ -34,7 +34,7 @@ export const traverse = (node: any, opts: Options) => {
         index: i,
       })
       nodeMap[type].push(itScope)
-      if (tc.isArray(itChildList)) {
+      if (isArray(itChildList)) {
         checkNode(itChildList, itScope, count + 1)
       }
     }

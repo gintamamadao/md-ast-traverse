@@ -6,13 +6,19 @@ describe('traverse', () => {
   test('traverse', async () => {
     const ast: any = toAst(md1)
     cache.write(ast)
+    let cnt = 0
     traverse(ast, {
       heading: (path) => {
         const node = path.node
-
+        cnt++
         expect(node.type).toBe('heading')
-        expect(node.children[0].value).toBe('笔记')
+        if (cnt === 1) {
+          expect(node.children[0].value).toBe('笔记')
+        } else if (cnt === 2) {
+          expect(node.children[0].value).toBe('思考')
+        }
       },
     })
+    expect(cnt).toBe(2)
   })
 })

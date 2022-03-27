@@ -32,6 +32,14 @@ export class NodePath {
     return this.getChain().find(key)
   }
 
+  getNodePath = (key: string) => {
+    return this.getChainNode(key)?.payload?.nodePath
+  }
+
+  getAstNode = (key: string) => {
+    return this.getNodePath(key)?.node
+  }
+
   getParent = () => {
     const cParentNode = this.getChainNode(this.parentKey)
     const { nodePath: pNodePath } = cParentNode.payload
@@ -74,14 +82,12 @@ export class NodePath {
   }
 
   setParentAstNodeChildren = () => {
-    const cParentNode = this.getChainNode(this.parentKey)
-    const { nodePath: parentPath } = cParentNode.payload
-    const { node: parentAstNode } = parentPath
+    const parentAstNode = this.getAstNode(this.parentKey)
     const siblings = this.getSiblings().map((it) => {
       return it.node
     })
-    parentAstNode.children.splice(0)
-    parentAstNode.children.push(...siblings)
+    parentAstNode?.children?.splice(0)
+    parentAstNode?.children?.push(...siblings)
   }
 
   remove = () => {

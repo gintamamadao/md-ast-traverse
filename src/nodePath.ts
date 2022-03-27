@@ -1,5 +1,6 @@
 import { Chain } from 'ginlibs-chain'
 import { getChainKey } from './utils'
+import cache from 'ginlibs-cache'
 
 export class NodePath {
   key: string
@@ -41,12 +42,12 @@ export class NodePath {
     return this.getNodePath(key)?.node
   }
 
-  getChildren = (key: string = this.key) => {
-    const cParentNode = this.getChainNode(key)
+  getChildren = (parentKey: string = this.key) => {
+    const cParentNode = this.getChainNode(parentKey)
+
     if (!cParentNode) {
       return []
     }
-    const curParentKey = this.parentKey
 
     const siblingIts: any[] = []
 
@@ -59,7 +60,7 @@ export class NodePath {
       const { nodePath } = payload
       const { parentKey: nParentKey, key = '' } = nodePath || {}
 
-      if (nParentKey === curParentKey) {
+      if (nParentKey === parentKey) {
         siblingIts.push(nodePath)
         isSiblingStart = true
       } else {
@@ -78,7 +79,7 @@ export class NodePath {
 
   setAstNodeChildren = (key: string = this.key) => {
     const astNode = this.getAstNode(key)
-    const siblings = this.getSiblings().map((it) => {
+    const siblings = this.getChildren(key).map((it) => {
       return it.node
     })
     astNode?.children?.splice(0)
@@ -133,5 +134,32 @@ export class NodePath {
       nodePath,
     })
     this.setParentAstNodeChildren()
+  }
+
+  addChild = (node: any) => {
+    const children = this.getChildren()
+
+    const lastChild = children[children.length - 1]
+    const lastChildIdx = lastChild.index || 0
+    const index = lastChildIdx + 1
+    const type = node.type
+    const parentKey = this.key
+    const key = getChainKey(parentKey, index, type)
+    const chain = this.getChain()
+
+    const pathInfo = {
+      chain,
+      astNode: node,
+      parentKey,
+      key,
+      type,
+      index,
+    }
+
+    const nodePath = new NodePath(pathInfo)
+    chain.insertAfter(lastChild.key, key, {
+      nodePath,
+    })
+    this.setAstNodeChildren()
   }
 }

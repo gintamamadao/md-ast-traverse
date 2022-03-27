@@ -1,5 +1,5 @@
 import { traverse, toAst } from '../../index'
-import { md1, md2 } from './md'
+import { md1, md2, md3 } from './md'
 import cache from 'ginlibs-cache'
 
 describe('traverse', () => {
@@ -60,4 +60,5 @@ describe('traverse', () => {
       },
     })
   })
+
 })

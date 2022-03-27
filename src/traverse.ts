@@ -23,11 +23,11 @@ export const traverse = (node: any, opts: Options) => {
     type: node.type,
   }
 
-  const rootNode =
+  const rootPath =
     node.getChain && node.getChain?.() ? node : new NodePath(pathInfo)
 
   chain.push(key, {
-    nodePath: rootNode,
+    nodePath: rootPath,
   })
 
   const checkNode = (nodeIts: any[], parentKey: string) => {
@@ -67,6 +67,5 @@ export const traverse = (node: any, opts: Options) => {
     func(nodePath)
     cNode = cNode.next
   }
-
-  return rootNode
+  return rootPath
 }

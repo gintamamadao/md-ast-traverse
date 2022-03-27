@@ -38,7 +38,7 @@ export class NodePath {
     return pNodePath
   }
 
-  getSibling = () => {
+  getSiblings = () => {
     const cParentNode = this.getChainNode(this.parentKey)
     const cNode = cParentNode.next
     const curParentKey = this.parentKey
@@ -68,4 +68,10 @@ export class NodePath {
 
     return siblingIts
   }
+
+  remove = () => {
+    const cNode = this.getChainNode(this.key)
+    this.getChain().remove(cNode)
+  }
+
 }

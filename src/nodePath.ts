@@ -1,14 +1,19 @@
 import { Chain } from 'ginlibs-chain'
 
 export class NodePath {
-  _traverseChain: Chain
   key: string
-  astNode: any
+  type: string
+  node: any
 
-  constructor(info: { chain: Chain; astNode: any; key: string }) {
-    const { chain, astNode, key } = info
-    this._traverseChain = chain
-    this.astNode = astNode
+  constructor(info: { chain: Chain; astNode: any; key: string; type }) {
+    const { chain, astNode, key, type } = info
+    this[Symbol.for('_traverseChain')] = chain
+    this.node = astNode
     this.key = key
+    this.type = type
+  }
+
+  getChain = () => {
+    return this[Symbol.for('_traverseChain')]
   }
 }

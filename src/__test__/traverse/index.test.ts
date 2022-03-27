@@ -6,9 +6,13 @@ describe('traverse', () => {
   test('traverse', async () => {
     const ast: any = toAst(md1)
     cache.write(ast)
-    const node = traverse(ast, {
-      heading: (node, scope) => {},
+    traverse(ast, {
+      heading: (path) => {
+        const node = path.node
+
+        expect(node.type).toBe('heading')
+        expect(node.children[0].value).toBe('笔记')
+      },
     })
-    cache.write(node, 'node')
   })
 })

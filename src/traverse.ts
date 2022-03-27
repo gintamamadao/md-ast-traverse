@@ -73,7 +73,7 @@ export const traverse = (node: any, opts: Options) => {
     if (nodeChain) {
       let isSiblingStart = false
       let isSiblingEnd = false
-      if (nodeKey.startsWith(key)) {
+      if (nodeKey && nodeKey.startsWith(key)) {
         isSiblingStart = true
       } else {
         if (isSiblingStart) {
@@ -82,11 +82,12 @@ export const traverse = (node: any, opts: Options) => {
         if (isSiblingEnd) {
           break
         } else {
+          cNode = cNode.next
           continue
         }
       }
     }
-    
+
     const func = opts[nodeType] || noop
     func(nodePath)
     cNode = cNode.next

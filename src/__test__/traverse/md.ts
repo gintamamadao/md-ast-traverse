@@ -3,7 +3,10 @@ export const md1 = `## 笔记
 
 export const md2 = `- [笔记](./笔记.md)`
 
-export const md3 = `# Parent Node
+export const md3 = `- [笔记](./笔记.md)
+- [思考](./思考.md)`
+
+export const md999 = `# Parent Node
 
 - [ROOT](./root.md)
 - [计算机语言](./计算机语言.md)

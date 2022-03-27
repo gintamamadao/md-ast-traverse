@@ -28,9 +28,44 @@ export class NodePath {
     return this[Symbol.for('_traverseChain')]
   }
 
+  getChainNode = (key: string = this.key) => {
+    return this.getChain().find(key)
+  }
+
   getParent = () => {
-    const cParentNode = this.getChain().find(this.parentKey)
+    const cParentNode = this.getChainNode(this.parentKey)
     const { nodePath: pNodePath } = cParentNode.payload
     return pNodePath
+  }
+
+  getSibling = () => {
+    const cParentNode = this.getChainNode(this.parentKey)
+    const cNode = cParentNode.next
+    const curParentKey = this.parentKey
+
+    const siblingIts: any[] = []
+
+    let isSiblingStart = false
+    let isSiblingEnd = false
+
+    while (cNode) {
+      const payload = cNode.payload || {}
+      const { nodePath } = payload
+      const { parentKey: nParentKey } = nodePath || {}
+
+      if (nParentKey === curParentKey) {
+        siblingIts.push(nodePath)
+        isSiblingStart = true
+      } else {
+        if (isSiblingStart) {
+          isSiblingEnd = true
+        }
+      }
+      if (isSiblingEnd) {
+        break
+      }
+    }
+
+    return siblingIts
   }
 }

@@ -1,5 +1,5 @@
 import { Chain } from 'ginlibs-chain'
-import { getChainKey } from './utils'
+import { getChainKey, IDX } from './utils'
 import cache from 'ginlibs-cache'
 
 export class NodePath {
@@ -84,6 +84,11 @@ export class NodePath {
     })
     astNode?.children?.splice(0)
     astNode?.children?.push(...siblings)
+  }
+
+  getAstLevel() {
+    const keyLevel = this.key.split(IDX)
+    return keyLevel.length - 1
   }
 
   getParent = () => {

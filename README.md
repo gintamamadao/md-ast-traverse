@@ -10,13 +10,11 @@
 import { traverse } from 'md-ast-traverse'
 
 traverse(mdAst, {
-  heading: (node, scope) => {
-    // do something
+  heading: (path) => {
+    // to do
   },
-  listItem: (node, scope) => {
-    // do something
+  listItem: (path) => {
+    // to do
   },
 })
 ```
-
-

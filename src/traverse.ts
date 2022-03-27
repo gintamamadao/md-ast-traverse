@@ -1,5 +1,4 @@
 import { NodeType } from './types'
-import { Scope } from './scope'
 import { isArray } from 'ginlibs-type-check'
 import { Chain } from 'ginlibs-chain'
 import { NodePath } from './nodePath'

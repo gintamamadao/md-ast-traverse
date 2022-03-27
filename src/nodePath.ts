@@ -29,6 +29,8 @@ export class NodePath {
   }
 
   getParent = () => {
-    return this.getChain().find(this.parentKey)
+    const cParentNode = this.getChain().find(this.parentKey)
+    const { nodePath: pNodePath } = cParentNode.payload
+    return pNodePath
   }
 }

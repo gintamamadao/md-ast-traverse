@@ -30,11 +30,14 @@ describe('traverse', () => {
     expect(cnt).toBe(2)
   })
 
-  test('traverse: node type', async () => {
-    const ast: any = toAst(md2)
+  test('traverse: node getParent', async () => {
+    const ast: any = toAst(md1)
     cache.write(ast)
     traverse(ast, {
-      heading: (path) => {},
+      text: (path) => {
+        const pNodePath = path.getParent()
+        expect(pNodePath.node.type).toBe('heading')
+      },
     })
   })
 })

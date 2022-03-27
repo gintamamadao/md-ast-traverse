@@ -7,7 +7,7 @@ import { getChainKey } from './utils'
 import cache from 'ginlibs-cache'
 
 export type Options = {
-  [p in NodeType]?: (node: any, scope: Scope) => void
+  [p in NodeType]?: (path: NodePath) => void
 }
 
 const noop: any = () => undefined

@@ -40,12 +40,6 @@ export class NodePath {
     return this.getNodePath(key)?.node
   }
 
-  getParent = () => {
-    const cParentNode = this.getChainNode(this.parentKey)
-    const { nodePath: pNodePath } = cParentNode.payload
-    return pNodePath
-  }
-
   getChildren = (key: string = this.key) => {
     const cParentNode = this.getChainNode(key)
     if (!cParentNode) {
@@ -79,6 +73,12 @@ export class NodePath {
     }
 
     return siblingIts
+  }
+
+  getParent = () => {
+    const cParentNode = this.getChainNode(this.parentKey)
+    const { nodePath: pNodePath } = cParentNode.payload
+    return pNodePath
   }
 
   getSiblings = () => {

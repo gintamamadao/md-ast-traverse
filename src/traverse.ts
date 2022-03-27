@@ -14,13 +14,16 @@ const noop: any = () => undefined
 
 export const traverse = (node: any, opts: Options) => {
   const chain = new Chain()
-  const key = node.key || node.type || 'root'
   const children = node.children || []
+  const hasChain = node.getChain && node.getChain?.()
+  const astNode = hasChain ? node.node : node
+  const type = node.type || 'root'
+  const key = node.key || type
   const pathInfo = {
     chain,
-    astNode: node,
+    astNode,
     key,
-    type: node.type,
+    type,
   }
 
   const rootPath =

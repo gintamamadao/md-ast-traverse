@@ -5,12 +5,10 @@ import cache from 'ginlibs-cache'
 describe('traverse', () => {
   test('traverse', async () => {
     const ast: any = toAst(md1)
-
-    cache.write(JSON.stringify(ast, undefined, 2))
-    traverse(ast, {
-      heading: (node, scope) => {
-        cache.write(JSON.stringify(node, undefined, 2))
-      },
+    cache.write(ast)
+    const node = traverse(ast, {
+      heading: (node, scope) => {},
     })
+    cache.write(node, 'node')
   })
 })

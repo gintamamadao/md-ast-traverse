@@ -1,4 +1,4 @@
-import { traverse, toAst } from '../../index'
+import { traverse, toAst, astToStr } from '../../index'
 import { md1, md2, md3 } from './md'
 import cache from 'ginlibs-cache'
 
@@ -42,7 +42,6 @@ describe('traverse', () => {
 
   test('traverse: node getParent 2', async () => {
     const ast: any = toAst(md2)
-    cache.write(ast)
     traverse(ast, {
       text: (path) => {
         expect(path.getParent().node.type).toBe('link')
@@ -61,4 +60,18 @@ describe('traverse', () => {
     })
   })
 
+  test('traverse: remove', async () => {
+    const ast: any = toAst(md3)
+    let cnt = 0
+    traverse(ast, {
+      listItem: (path) => {
+        cnt++
+        if (cnt === 1) {
+          path.remove()
+        }
+      },
+    })
+    expect(astToStr(ast)).toBe(`*   [思考](./思考.md)\n`)
+    // cache.write(ast)
+  })
 })

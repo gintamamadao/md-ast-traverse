@@ -40,7 +40,9 @@ export class NodePath {
 
   getSiblings = () => {
     const cParentNode = this.getChainNode(this.parentKey)
-    const cNode = cParentNode.next
+    if (!cParentNode) {
+      return []
+    }
     const curParentKey = this.parentKey
 
     const siblingIts: any[] = []
@@ -48,6 +50,7 @@ export class NodePath {
     let isSiblingStart = false
     let isSiblingEnd = false
 
+    let cNode = cParentNode.next
     while (cNode) {
       const payload = cNode.payload || {}
       const { nodePath } = payload
@@ -64,14 +67,26 @@ export class NodePath {
       if (isSiblingEnd) {
         break
       }
+      cNode = cNode.next
     }
 
     return siblingIts
   }
 
+  setParentAstNodeChildren = () => {
+    const cParentNode = this.getChainNode(this.parentKey)
+    const { nodePath: parentPath } = cParentNode.payload
+    const { node: parentAstNode } = parentPath
+    const siblings = this.getSiblings().map((it) => {
+      return it.node
+    })
+    parentAstNode.children.splice(0)
+    parentAstNode.children.push(...siblings)
+  }
+
   remove = () => {
     const cNode = this.getChainNode(this.key)
     this.getChain().remove(cNode)
+    this.setParentAstNodeChildren()
   }
-
 }

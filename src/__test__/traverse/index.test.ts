@@ -18,6 +18,15 @@ describe('traverse', () => {
           expect(node.children[0].value).toBe('思考')
         }
       },
+      text: (path) => {
+        const node = path.node
+        expect(node.type).toBe('text')
+        if (cnt === 1) {
+          expect(node.value).toBe('笔记')
+        } else if (cnt === 2) {
+          expect(node.value).toBe('思考')
+        }
+      },
     })
     expect(cnt).toBe(2)
   })

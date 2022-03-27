@@ -4,6 +4,7 @@ import { isArray } from 'ginlibs-type-check'
 import { Chain } from 'ginlibs-chain'
 import { NodePath } from './nodePath'
 import { getChainKey } from './utils'
+import cache from 'ginlibs-cache'
 
 export type Options = {
   [p in NodeType]?: (node: any, scope: Scope) => void
@@ -58,10 +59,10 @@ export const traverse = (node: any, opts: Options) => {
   checkNode(children, key)
 
   let cNode: any = chain.getHead()
-
   while (cNode) {
     const payload = cNode.payload || {}
-    const { type, nodePath } = payload
+    const { nodePath } = payload
+    const { type } = nodePath || {}
     const func = opts[type] || noop
     func(nodePath)
     cNode = cNode.next

@@ -1,11 +1,10 @@
 import { traverse, toAst } from '../../index'
-import { md1 } from './md'
+import { md1, md2 } from './md'
 import cache from 'ginlibs-cache'
 
 describe('traverse', () => {
-  test('traverse', async () => {
+  test('traverse: node type', async () => {
     const ast: any = toAst(md1)
-    cache.write(ast)
     let cnt = 0
     traverse(ast, {
       heading: (path) => {
@@ -29,5 +28,13 @@ describe('traverse', () => {
       },
     })
     expect(cnt).toBe(2)
+  })
+
+  test('traverse: node type', async () => {
+    const ast: any = toAst(md2)
+    cache.write(ast)
+    traverse(ast, {
+      heading: (path) => {},
+    })
   })
 })

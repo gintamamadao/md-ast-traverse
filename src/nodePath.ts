@@ -54,13 +54,13 @@ export class NodePath {
     while (cNode) {
       const payload = cNode.payload || {}
       const { nodePath } = payload
-      const { parentKey: nParentKey } = nodePath || {}
+      const { parentKey: nParentKey, key = '' } = nodePath || {}
 
       if (nParentKey === curParentKey) {
         siblingIts.push(nodePath)
         isSiblingStart = true
       } else {
-        if (isSiblingStart) {
+        if (isSiblingStart && !key.startsWith(nParentKey)) {
           isSiblingEnd = true
         }
       }
@@ -87,6 +87,11 @@ export class NodePath {
   remove = () => {
     const cNode = this.getChainNode(this.key)
     this.getChain().remove(cNode)
+    this.setParentAstNodeChildren()
+  }
+
+  replaceWith = (node: any) => {
+    this.node = node
     this.setParentAstNodeChildren()
   }
 }

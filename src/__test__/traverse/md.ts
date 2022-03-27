@@ -9,13 +9,12 @@ export const md3 = `- [笔记](./笔记.md)
 export const md999 = `# Parent Node
 
 - [ROOT](./root.md)
-- [计算机语言](./计算机语言.md)
+- [笔记](./笔记.md)
 
 # Child Node
 
-- [ECMAScript 知识体系](./ECMAScript_知识体系.md)
-- [ECMAScript 学习杂记](./ECMAScript_学习杂记.md)
-- [ECMAScript 插件依赖](./ECMAScript_插件依赖.md)
+- [要点](./要点.md)
+- [思考](./思考.md)
 
 # Title: \`ECMAScript\`
 

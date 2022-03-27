@@ -13,10 +13,10 @@ export type Options = {
 const noop: any = () => undefined
 
 export const traverse = (node: any, opts: Options) => {
-  const chain = new Chain()
   const children = node.children || []
-  const hasChain = node.getChain && node.getChain?.()
-  const astNode = hasChain ? node.node : node
+  const nodeChain = node.getChain && node.getChain?.()
+  const chain = nodeChain || new Chain()
+  const astNode = nodeChain ? node.node : node
   const type = node.type || 'root'
   const key = node.key || type
   const pathInfo = {
@@ -25,13 +25,13 @@ export const traverse = (node: any, opts: Options) => {
     key,
     type,
   }
+  const rootPath = nodeChain ? node : new NodePath(pathInfo)
 
-  const rootPath =
-    node.getChain && node.getChain?.() ? node : new NodePath(pathInfo)
-
-  chain.push(key, {
-    nodePath: rootPath,
-  })
+  if (!nodeChain) {
+    chain.push(key, {
+      nodePath: rootPath,
+    })
+  }
 
   const checkNode = (nodeIts: any[], parentKey: string) => {
     for (let i = 0; i < nodeIts.length; i++) {
@@ -59,14 +59,35 @@ export const traverse = (node: any, opts: Options) => {
       }
     }
   }
-  checkNode(children, key)
+
+  if (!nodeChain) {
+    checkNode(children, key)
+  }
 
   let cNode: any = chain.getHead()
   while (cNode) {
     const payload = cNode.payload || {}
     const { nodePath } = payload
-    const { type } = nodePath || {}
-    const func = opts[type] || noop
+    const { type: nodeType, key: nodeKey } = nodePath || {}
+
+    if (nodeChain) {
+      let isSiblingStart = false
+      let isSiblingEnd = false
+      if (nodeKey.startsWith(key)) {
+        isSiblingStart = true
+      } else {
+        if (isSiblingStart) {
+          isSiblingEnd = true
+        }
+        if (isSiblingEnd) {
+          break
+        } else {
+          continue
+        }
+      }
+    }
+    
+    const func = opts[nodeType] || noop
     func(nodePath)
     cNode = cNode.next
   }

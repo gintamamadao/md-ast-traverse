@@ -119,7 +119,7 @@ export class NodePath {
   getNewSiblingPathInfo = (node: any) => {
     const siblings = this.getSiblings()
     const siblIdxs = siblings.map((it) => it.index || 0)
-    const maxSiblIdx = Math.max(...siblIdxs)
+    const maxSiblIdx = siblIdxs.length > 0 ? Math.max(...siblIdxs) : 0
     const index = maxSiblIdx + 1
     const type = node.type
     const parentKey = this.parentKey
@@ -145,7 +145,7 @@ export class NodePath {
   getNewChildPathInfo = (node: any) => {
     const children = this.getChildren()
     const childIdxs = children.map((it) => it.index || 0)
-    const maxChildIdx = Math.max(...childIdxs)
+    const maxChildIdx = childIdxs.length > 0 ? Math.max(...childIdxs) : 0
     const index = maxChildIdx + 1
     const type = node.type
     const parentKey = this.key
@@ -180,11 +180,29 @@ export class NodePath {
     this.setParentAstNodeChildren()
   }
 
+  unshiftSibling = (node: any) => {
+    const chain = this.getChain()
+    const { nodePath, newKey } = this.getNewSiblingPathInfo(node)
+    chain.insertAfter(this.parentKey, newKey, {
+      nodePath,
+    })
+    this.setParentAstNodeChildren()
+  }
+
   addChild = (node: any) => {
     const chain = this.getChain()
     const { children, nodePath, newKey } = this.getNewChildPathInfo(node)
     const lastChild = children[children.length - 1]
     chain.insertAfter(lastChild.key, newKey, {
+      nodePath,
+    })
+    this.setAstNodeChildren()
+  }
+
+  unshiftChild = (node: any) => {
+    const chain = this.getChain()
+    const { nodePath, newKey } = this.getNewChildPathInfo(node)
+    chain.insertAfter(this.key, newKey, {
       nodePath,
     })
     this.setAstNodeChildren()

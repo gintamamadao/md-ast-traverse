@@ -32,4 +32,29 @@ describe('traverse', () => {
       },
     })
   })
+
+  test('traverse: unshiftSibling 1', async () => {
+    const ast: any = toAst(md3)
+    let cnt = 0
+    const astPath = traverse(ast, {
+      listItem: (path) => {
+        cnt++
+        if (cnt === 1) {
+          path.unshiftSibling(newNode)
+        }
+      },
+    })
+    expect(astToStr(ast)).toBe(
+      `*   [总结](./总结.md)\n*   [笔记](./笔记.md)\n*   [思考](./思考.md)\n`
+    )
+    let cnt2 = 0
+    traverse(astPath, {
+      listItem: (path) => {
+        if (cnt2 === 0) {
+          expect(path.index).toBe(2)
+        }
+        cnt2++
+      },
+    })
+  })
 })

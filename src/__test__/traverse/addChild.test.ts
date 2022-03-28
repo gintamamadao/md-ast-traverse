@@ -13,14 +13,22 @@ describe('traverse', () => {
 
   test('traverse: addChild 1', async () => {
     const ast: any = toAst(md3)
-    traverse(ast, {
+    const astPath = traverse(ast, {
       list: (path) => {
         path.addChild(newNode)
       },
     })
-    
+
     expect(astToStr(ast)).toBe(
       `*   [笔记](./笔记.md)\n*   [思考](./思考.md)\n*   [总结](./总结.md)\n`
     )
+
+    let cnt2 = 0
+    traverse(astPath, {
+      listItem: (path) => {
+        expect(path.index).toBe(cnt2)
+        cnt2++
+      },
+    })
   })
 })

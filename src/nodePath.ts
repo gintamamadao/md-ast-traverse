@@ -116,11 +116,11 @@ export class NodePath {
     this.setParentAstNodeChildren()
   }
 
-  addSibling = (node: any) => {
+  getNewSiblingPathInfo = (node: any) => {
     const siblings = this.getSiblings()
-    const lastSibl = siblings[siblings.length - 1]
-    const lastSiblIdx = lastSibl.index || 0
-    const index = lastSiblIdx + 1
+    const siblIdxs = siblings.map((it) => it.index || 0)
+    const maxSiblIdx = Math.max(...siblIdxs)
+    const index = maxSiblIdx + 1
     const type = node.type
     const parentKey = this.parentKey
     const key = getChainKey(parentKey, index, type)
@@ -135,18 +135,18 @@ export class NodePath {
       index,
     }
     const nodePath = new NodePath(pathInfo)
-    chain.insertAfter(lastSibl.key, key, {
+    return {
+      newKey: key,
+      siblings,
       nodePath,
-    })
-    this.setParentAstNodeChildren()
+    }
   }
 
-  addChild = (node: any) => {
+  getNewChildPathInfo = (node: any) => {
     const children = this.getChildren()
-
-    const lastChild = children[children.length - 1]
-    const lastChildIdx = lastChild.index || 0
-    const index = lastChildIdx + 1
+    const childIdxs = children.map((it) => it.index || 0)
+    const maxChildIdx = Math.max(...childIdxs)
+    const index = maxChildIdx + 1
     const type = node.type
     const parentKey = this.key
     const key = getChainKey(parentKey, index, type)
@@ -162,7 +162,29 @@ export class NodePath {
     }
 
     const nodePath = new NodePath(pathInfo)
-    chain.insertAfter(lastChild.key, key, {
+
+    return {
+      newKey: key,
+      children,
+      nodePath,
+    }
+  }
+
+  addSibling = (node: any) => {
+    const chain = this.getChain()
+    const { siblings, nodePath, newKey } = this.getNewSiblingPathInfo(node)
+    const lastSibl = siblings[siblings.length - 1]
+    chain.insertAfter(lastSibl.key, newKey, {
+      nodePath,
+    })
+    this.setParentAstNodeChildren()
+  }
+
+  addChild = (node: any) => {
+    const chain = this.getChain()
+    const { children, nodePath, newKey } = this.getNewChildPathInfo(node)
+    const lastChild = children[children.length - 1]
+    chain.insertAfter(lastChild.key, newKey, {
       nodePath,
     })
     this.setAstNodeChildren()

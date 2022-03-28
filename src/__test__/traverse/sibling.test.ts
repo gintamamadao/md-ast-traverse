@@ -57,4 +57,36 @@ describe('traverse', () => {
       },
     })
   })
+
+  test('traverse: insertSiblingAfter 1', async () => {
+    const ast: any = toAst(md3)
+    let cnt = 0
+    traverse(ast, {
+      listItem: (path) => {
+        cnt++
+        if (cnt === 1) {
+          path.insertSiblingAfter(newNode, path)
+        }
+      },
+    })
+    expect(astToStr(ast)).toBe(
+      `*   [笔记](./笔记.md)\n*   [总结](./总结.md)\n*   [思考](./思考.md)\n`
+    )
+  })
+
+  test('traverse: insertSiblingAfter 2', async () => {
+    const ast: any = toAst(md3)
+    let cnt = 0
+    traverse(ast, {
+      listItem: (path) => {
+        cnt++
+        if (cnt === 2) {
+          path.insertSiblingAfter(newNode, path)
+        }
+      },
+    })
+    expect(astToStr(ast)).toBe(
+      `*   [笔记](./笔记.md)\n*   [思考](./思考.md)\n*   [总结](./总结.md)\n`
+    )
+  })
 })

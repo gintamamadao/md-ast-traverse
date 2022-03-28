@@ -8,21 +8,16 @@ export const md3 = `- [笔记](./笔记.md)
 
 export const md10 = `# Parent Node
 
-- [ROOT](./root.md)
-- [笔记](./笔记.md)
+- [root](./root.md)
 
 # Child Node
 
 - [要点](./要点.md)
 - [思考](./思考.md)
 
-# Title: \`ECMAScript\`
+# Title: \`笔记\`
 
 ## 要点
 
-## 思考
-
 ### _1._ \`xxxx\`
-
-### _1-1._ \`xxxxxx\`
 `

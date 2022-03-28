@@ -30,7 +30,7 @@ describe('traverse', () => {
     expect(cnt).toBe(2)
   })
 
-  test.only('traverse: node type 2', async () => {
+  test('traverse: node type 2', async () => {
     const ast: any = toAst(md3)
     traverse(ast, {
       listItem: (path) => {

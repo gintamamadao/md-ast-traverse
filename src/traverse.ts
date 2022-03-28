@@ -2,16 +2,25 @@ import { NodeType } from './types'
 import { isArray } from 'ginlibs-type-check'
 import { Chain } from 'ginlibs-chain'
 import { NodePath } from './nodePath'
-import { getChainKey } from './utils'
+import { getChainKey, IDX } from './utils'
 import cache from 'ginlibs-cache'
 
-export type Options = {
+export type MDEleTypeHandleMap = {
   [p in NodeType]?: (path: NodePath) => void
+}
+
+export interface Options {
+  level?: number // 指遍历 ast 树的第几层
 }
 
 const noop: any = () => undefined
 
-export const traverse = (node: any, opts: Options) => {
+export const traverse = (
+  node: any,
+  typeHandleMap: MDEleTypeHandleMap,
+  opts: Options = {}
+) => {
+  const { level = Number.MAX_SAFE_INTEGER } = opts
   const children = node.children || []
   const nodeChain = node.getChain && node.getChain?.()
   const chain = nodeChain || new Chain()
@@ -40,6 +49,10 @@ export const traverse = (node: any, opts: Options) => {
         continue
       }
       const itKey = getChainKey(parentKey, i, itType)
+      const itCurLevel = itKey.split(IDX).length - 1
+      if (itCurLevel > level) {
+        return
+      }
       const itChildList = it.children
       const itPathInfo = {
         chain,
@@ -87,7 +100,7 @@ export const traverse = (node: any, opts: Options) => {
       }
     }
 
-    const func = opts[nodeType] || noop
+    const func = typeHandleMap[nodeType] || noop
     func(nodePath)
     cNode = cNode.next
   }

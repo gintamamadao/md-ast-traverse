@@ -1,4 +1,5 @@
 import { Chain } from 'ginlibs-chain'
+import { isNumber } from 'ginlibs-type-check'
 import { getChainKey, IDX } from './utils'
 import cache from 'ginlibs-cache'
 
@@ -101,6 +102,35 @@ export class NodePath {
     return this.getChildren(this.parentKey)
   }
 
+  getChild = (index = 0) => {
+    const children = this.getChildren()
+    return children[index]
+  }
+
+  getPrevSibling = () => {
+    const siblings = this.getSiblings()
+    if (siblings.length < 2) {
+      return
+    }
+    const curIdx = siblings.findIndex((it) => it.key === this.key)
+    if (isNumber(curIdx) && curIdx >= 1) {
+      return siblings[curIdx - 1]
+    }
+    return
+  }
+
+  getNextSibling = () => {
+    const siblings = this.getSiblings()
+    if (siblings.length < 2) {
+      return
+    }
+    const curIdx = siblings.findIndex((it) => it.key === this.key)
+    if (isNumber(curIdx) && curIdx < siblings.length - 1) {
+      return siblings[curIdx + 1]
+    }
+    return
+  }
+
   setParentAstNodeChildren = () => {
     return this.setAstNodeChildren(this.parentKey)
   }
@@ -184,6 +214,15 @@ export class NodePath {
     const chain = this.getChain()
     const { nodePath, newKey } = this.getNewSiblingPathInfo(node)
     chain.insertAfter(this.parentKey, newKey, {
+      nodePath,
+    })
+    this.setParentAstNodeChildren()
+  }
+
+  insertSiblingAfter = (node: any, coorPath: NodePath) => {
+    const chain = this.getChain()
+    const { nodePath, newKey } = this.getNewSiblingPathInfo(node)
+    chain.insertAfter(coorPath.key, newKey, {
       nodePath,
     })
     this.setParentAstNodeChildren()

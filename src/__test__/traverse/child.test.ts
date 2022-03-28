@@ -1,5 +1,5 @@
 import { traverse, toAst, astToStr } from '../../index'
-import { md3 } from './md'
+import { md3, md4 } from './md'
 import cache from 'ginlibs-cache'
 
 describe('traverse', () => {
@@ -9,6 +9,24 @@ describe('traverse', () => {
     listItem: (path) => {
       newNode = path.node
     },
+  })
+
+  test('traverse: getChild 1', async () => {
+    const ast: any = toAst(md4)
+    traverse(ast, {
+      list: (path) => {
+        traverse(path.getChild(0), {
+          text: (itPath) => {
+            expect(itPath.node.value).toBe('1')
+          },
+        })
+        traverse(path.getChild(1), {
+          text: (itPath) => {
+            expect(itPath.node.value).toBe('2')
+          },
+        })
+      },
+    })
   })
 
   test('traverse: addChild 1', async () => {

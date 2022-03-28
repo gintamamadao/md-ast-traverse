@@ -46,5 +46,14 @@ describe('traverse', () => {
       }
     )
     expect(astPath3.getChain().checkLength()).toBe(23)
+
+    const astPath1000 = traverse(
+      ast,
+      {},
+      {
+        level: 1000,
+      }
+    )
+    expect(astPath1000.getChain().checkLength()).toBe(29)
   })
 })

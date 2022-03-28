@@ -77,17 +77,18 @@ export const traverse = (
   }
 
   let cNode: any = chain.getHead()
+  let isSiblingStart = false
+  let isSiblingEnd = false
   while (cNode) {
     const payload = cNode.payload || {}
     const { nodePath } = payload
     const { type: nodeType, key: nodeKey } = nodePath || {}
 
     if (nodeChain) {
-      let isSiblingStart = false
-      let isSiblingEnd = false
       if (nodeKey && nodeKey.startsWith(key)) {
         isSiblingStart = true
       } else {
+        // 不符合当前 node key 跳过当次或者中断循环
         if (isSiblingStart) {
           isSiblingEnd = true
         }

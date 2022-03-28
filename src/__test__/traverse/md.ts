@@ -6,6 +6,11 @@ export const md2 = `- [笔记](./笔记.md)`
 export const md3 = `- [笔记](./笔记.md)
 - [思考](./思考.md)`
 
+export const md4 = `- 1
+- 2
+- 3
+- 4`
+
 export const md10 = `# Parent Node
 
 - [root](./root.md)

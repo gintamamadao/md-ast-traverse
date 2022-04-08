@@ -77,33 +77,38 @@ export const traverse = (
   }
 
   let cNode: any = chain.getHead()
-  let isSiblingStart = false
-  let isSiblingEnd = false
+  const arriStatus = {
+    start: false,
+    end: false,
+  }
   while (cNode) {
     const payload = cNode.payload || {}
     const { nodePath } = payload
     const { type: nodeType, key: nodeKey } = nodePath || {}
+    const func = typeHandleMap[nodeType] || noop
 
     if (nodeChain) {
       if (nodeKey && nodeKey.startsWith(key)) {
-        isSiblingStart = true
+        arriStatus.start = true
+        func(nodePath)
+        cNode = cNode.next
+        continue
       } else {
         // 不符合当前 node key 跳过当次或者中断循环
-        if (isSiblingStart) {
-          isSiblingEnd = true
+        if (arriStatus.start) {
+          arriStatus.end = true
         }
-        if (isSiblingEnd) {
+        if (arriStatus.end) {
           break
         } else {
           cNode = cNode.next
           continue
         }
       }
+    } else {
+      func(nodePath)
+      cNode = cNode.next
     }
-
-    const func = typeHandleMap[nodeType] || noop
-    func(nodePath)
-    cNode = cNode.next
   }
   return rootPath
 }

@@ -52,25 +52,20 @@ export class NodePath {
 
     const siblingIts: any[] = []
 
-    let isSiblingStart = false
-    let isSiblingEnd = false
-
+    let arriSiblingStatus = 0
     let cNode = cParentNode.next
     while (cNode) {
       const payload = cNode.payload || {}
       const { nodePath } = payload
-      const { parentKey: nParentKey, key = '' } = nodePath || {}
+      const { parentKey: cnParentKey, key = '' } = nodePath || {}
 
-      if (nParentKey === parentKey) {
+      if (cnParentKey === parentKey) {
+        arriSiblingStatus = 1
         siblingIts.push(nodePath)
-        isSiblingStart = true
       } else {
-        if (isSiblingStart && !key.startsWith(nParentKey)) {
-          isSiblingEnd = true
+        if (arriSiblingStatus === 1 && !key.startsWith(parentKey)) {
+          break
         }
-      }
-      if (isSiblingEnd) {
-        break
       }
       cNode = cNode.next
     }

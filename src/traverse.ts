@@ -77,10 +77,7 @@ export const traverse = (
   }
 
   let cNode: any = chain.getHead()
-  const arriStatus = {
-    start: false,
-    end: false,
-  }
+  let arriStatus = 0
   while (cNode) {
     const payload = cNode.payload || {}
     const { nodePath } = payload
@@ -89,16 +86,13 @@ export const traverse = (
 
     if (nodeChain) {
       if (nodeKey && nodeKey.startsWith(key)) {
-        arriStatus.start = true
+        arriStatus = 1
         func(nodePath)
         cNode = cNode.next
         continue
       } else {
         // 不符合当前 node key 跳过当次或者中断循环
-        if (arriStatus.start) {
-          arriStatus.end = true
-        }
-        if (arriStatus.end) {
+        if (arriStatus === 1) {
           break
         } else {
           cNode = cNode.next

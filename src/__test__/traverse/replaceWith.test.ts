@@ -1,14 +1,8 @@
-import { traverse, toAst, astToStr } from '../../index'
+import { traverse, toAst, astToStr, getTypeNodeByStr } from '../../index'
 import { md3 } from './md'
 
 describe('traverse', () => {
-  const newAst = toAst('- [总结](./总结.md)')
-  let newNode
-  traverse(newAst, {
-    listItem: (path) => {
-      newNode = path.node
-    },
-  })
+  const newNode = getTypeNodeByStr('- [总结](./总结.md)', 'listItem')
 
   test('traverse: replaceWith 1', async () => {
     const ast: any = toAst(md3)

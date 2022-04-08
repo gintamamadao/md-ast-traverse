@@ -1,4 +1,4 @@
-import { NodeType } from './types'
+import { NType } from './types'
 import { isArray } from 'ginlibs-type-check'
 import { Chain } from 'ginlibs-chain'
 import { NodePath } from './nodePath'
@@ -6,7 +6,7 @@ import { getChainKey, IDX } from './utils'
 import cache from 'ginlibs-cache'
 
 export type MDEleTypeHandleMap = {
-  [p in NodeType]?: (path: NodePath) => void
+  [p in NType]?: (path: NodePath) => void
 }
 
 export interface Options {

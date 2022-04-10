@@ -13,3 +13,11 @@ export const isListItem = (node: any) => {
 export const isCode = (node: any) => {
   return node?.type === 'code'
 }
+
+export const isEmphasis = (node: any) => {
+  return node?.type === 'emphasis'
+}
+
+export const isInlineCode = (node: any) => {
+  return node?.type === 'inlineCode'
+}

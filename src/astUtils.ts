@@ -35,3 +35,22 @@ export const replaceWithNodeByStr = (
   const node = getTypeNodeByStr(str, type)
   node && path.replaceWith(node)
 }
+
+export const insertSiblingAfterByStr = (
+  str: string,
+  type: NType,
+  path: NodePath
+) => {
+  const node = getTypeNodeByStr(str, type)
+  node && path.insertSiblingAfter(node, path)
+}
+
+export const addChildByStr = (str: string, type: NType, path: NodePath) => {
+  const node = getTypeNodeByStr(str, type)
+  node && path.addChild(node)
+}
+
+export const unshiftChildByStr = (str: string, type: NType, path: NodePath) => {
+  const node = getTypeNodeByStr(str, type)
+  node && path.unshiftChild(node)
+}

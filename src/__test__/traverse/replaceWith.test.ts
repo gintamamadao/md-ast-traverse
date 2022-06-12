@@ -1,6 +1,8 @@
 import { traverse, toAst, astToStr, getTypeNodeByStr } from '../../index'
 import { md3 } from './md'
 
+import cache from 'ginlibs-cache'
+
 describe('traverse', () => {
   const newNode = getTypeNodeByStr('- [总结](./总结.md)', 'listItem')
 
@@ -30,5 +32,20 @@ describe('traverse', () => {
       },
     })
     expect(astToStr(ast)).toBe(`*   [笔记](./笔记.md)\n*   [总结](./总结.md)\n`)
+  })
+
+  test('traverse: replaceWithString 1', async () => {
+    const ast: any = toAst(md3)
+    let cnt = 0
+    traverse(ast, {
+      listItem: (path) => {
+        cnt++
+        if (cnt === 2) {
+          path.replaceWithString('## a\n- b')
+        }
+      },
+    })
+    cache.write(astToStr(ast))
+    expect(astToStr(ast)).toBe(`*   [笔记](./笔记.md)\n## a\n*   b\n`)
   })
 })

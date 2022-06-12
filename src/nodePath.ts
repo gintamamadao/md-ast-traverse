@@ -1,6 +1,7 @@
 import { Chain } from 'ginlibs-chain'
 import { isNumber } from 'ginlibs-type-check'
 import { getChainKey, IDX } from './utils'
+import { toAst } from './toAst'
 import cache from 'ginlibs-cache'
 
 export class NodePath {
@@ -139,6 +140,17 @@ export class NodePath {
   replaceWith = (node: any) => {
     this.node = node
     this.setParentAstNodeChildren()
+  }
+
+  replaceWithString = (string: string) => {
+    const strNodeList = toAst(string)?.children || []
+    strNodeList.forEach((it, idx) => {
+      if (idx === 0) {
+        this.replaceWith(it)
+        return
+      }
+      this.addSibling(it)
+    })
   }
 
   getNewSiblingPathInfo = (node: any) => {

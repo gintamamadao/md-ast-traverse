@@ -8,5 +8,6 @@ export { NodePath } from './nodePath'
 
 export * from './astUtils'
 export * from './nodeType'
+export * from './create'
 
 export default traverse
